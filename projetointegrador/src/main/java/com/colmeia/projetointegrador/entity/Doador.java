@@ -1,70 +1,63 @@
 package com.colmeia.projetointegrador.entity;
 
-import javax.persistence.CascadeType;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@Table(name = "tb_Doador")
+@Table(name = "tb_doador")
 
 public class Doador extends Usuario {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JsonIgnoreProperties("itensdoacao")
-	@Column(name="idDoador")
+	@Column(name = "id_doador")
 	private Long idDoador;
-	
-	@NotBlank
-	@Size(max=20)
-	@Column(name="nomeDoador")
-	private String nome;
-	
-	
-		
-	public Doador(Long idDoador, String nome, String sobrenone, String nomeSocial, String email, @NotBlank @CPF @Size(max = 11) String cpf, String telefone) {
-		super(idDoador, nome, sobrenone, nomeSocial, email, cpf, telefone);
-	
+
+	public Doador(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,
+			@NotBlank @CPF @Size(max = 11) String cpf, @NotBlank @Size(max = 11) String telefone, Long idDoador) {
+		super(nome, email, cpf, telefone);
+		this.idDoador = idDoador;
 	}
-
-
 
 	public Long getIdDoador() {
 		return idDoador;
 	}
 
-
-
 	public void setIdDoador(Long idDoador) {
 		this.idDoador = idDoador;
 	}
 
-
-
-	public String getNome() {
-		return nome;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(idDoador);
+		return result;
 	}
 
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Doador other = (Doador) obj;
+		return Objects.equals(idDoador, other.idDoador);
 	}
 
-	
-	
 }
