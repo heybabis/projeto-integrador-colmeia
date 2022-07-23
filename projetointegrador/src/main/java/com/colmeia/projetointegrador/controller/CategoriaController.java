@@ -18,45 +18,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.colmeia.projetointegrador.dto.ProdutoDTO;
-import com.colmeia.projetointegrador.service.ProdutoService;
+import com.colmeia.projetointegrador.dto.CategoriaDTO;
+import com.colmeia.projetointegrador.service.CategoriaService;
 
 @RestController
-@RequestMapping(value = "/produtos")
-public class ProdutoController {
+@RequestMapping(value = "/categorias")
+public class CategoriaController {
 
 	@Autowired
-	private ProdutoService service;
+	private CategoriaService service;
 
 	@GetMapping
-	public ResponseEntity<Page<ProdutoDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<CategoriaDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Page<ProdutoDTO> list = service.findAllPaged(pageRequest);
+		Page<CategoriaDTO> list = service.findAllPaged(pageRequest);
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id) {
-		ProdutoDTO dto = service.findById(id);
+	public ResponseEntity<CategoriaDTO> findById(@PathVariable Long id) {
+		CategoriaDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 
 	}
 
 	@PostMapping // inseri um novo recurso
-	public ResponseEntity<ProdutoDTO> insert(@RequestBody ProdutoDTO dto) {
+	public ResponseEntity<CategoriaDTO> insert(@RequestBody CategoriaDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-		// insere um objeto, retorna 201
+		// insere um objeto, e retorna 201
 		return ResponseEntity.created(uri).body(dto);
 
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
+	public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO dto) {
 		dto = service.update(id, dto);// passa as variáveis de cima.
 		return ResponseEntity.ok().body(dto);
 
