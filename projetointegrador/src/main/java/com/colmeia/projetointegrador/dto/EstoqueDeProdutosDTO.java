@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.colmeia.projetointegrador.entity.EstoqueDeProdutosEntity;
+import com.colmeia.projetointegrador.entity.EstoqueDeProdutos;
 import com.colmeia.projetointegrador.entity.Produto;
 
 
 //o dia é lindo!!
-public class EstoqueDeProdutosDTO implements Serializable {
+/*public class EstoqueDeProdutosDTO implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -79,7 +80,7 @@ public class EstoqueDeProdutosDTO implements Serializable {
 	
 	
 	
+}	
 	
-	
-	
-}
+	*/
+

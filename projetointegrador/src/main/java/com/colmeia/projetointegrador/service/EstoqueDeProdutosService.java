@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.colmeia.projetointegrador.entity.Produto;
-import com.colmeia.projetointegrador.entity.EstoqueDeProdutosEntity;
+import com.colmeia.projetointegrador.entity.EstoqueDeProdutos;
 
-public static void adicionarProduto(Produto produto, Integer quantidade){
+public class EstoqueDeProdutosService{
+
+/*public static void adicionarProduto(Produto produto, Integer quantidade){
     List<Produto> produtosDoCodigo;
     Long id = produto.getId();
 
@@ -114,7 +116,7 @@ public static void mostrarEstoque(int opcaoDeEstoque){
 
 
 
-
+*/
 
 }
 

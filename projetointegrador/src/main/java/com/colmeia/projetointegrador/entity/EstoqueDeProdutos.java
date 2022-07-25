@@ -1,7 +1,8 @@
-package com.colmeia.projetointegrador.entity;
+ package com.colmeia.projetointegrador.entity;
 
 //o dia é lindo!!
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +19,16 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "tb_produtos")
 
-public class EstoqueDeProdutosEntity implements Serializable {
+public class EstoqueDeProdutos implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
-	@Column(name = "estoque")
-	public static Map<String, List<Produto>> estoque = new LinkedHashMap<String, List<Produto>>();;
+	@Column(name = "lista_produtos")
+	public  List<Produto> produtos;
 
 	@NotBlank
 	@Column(name = "produto")
@@ -86,4 +87,5 @@ public class EstoqueDeProdutosEntity implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+*/
 }

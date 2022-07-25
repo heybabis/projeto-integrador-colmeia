@@ -34,6 +34,8 @@ public abstract class Usuario {
 	@Size(max = 11)
 	private String cpf;
 
+	public Object dto;
+
 	//Na camada controller é preciso colocar a anotação valid
 	
 
