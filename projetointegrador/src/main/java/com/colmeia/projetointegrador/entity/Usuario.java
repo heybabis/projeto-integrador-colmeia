@@ -1,8 +1,6 @@
 package com.colmeia.projetointegrador.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -36,13 +34,14 @@ public abstract class Usuario {
 	@Size(max = 11)
 	private String cpf;
 
-	@NotBlank
-	@Size(max = 11)
-	private String telefone;
+	//Na camada controller é preciso colocar a anotação valid
+	
+
 
 	public Usuario(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,
 			@NotBlank @CPF @Size(max = 11) String cpf, @NotBlank @Size(max = 11) String telefone) {
 		super();
+
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;

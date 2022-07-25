@@ -28,20 +28,18 @@ public class ProdutoService {
 		return list.map(x -> new ProdutoDTO(x));
 	}
 
-	@Transactional(readOnly = true)//apenas consultas
+	@Transactional(readOnly = true)
 	public ProdutoDTO findById(Long id) {
 		Optional<Produto> obj = repository.findById(id);
-		Produto entity = obj.orElseThrow(() -> new ResourceNotFoundException("Não encontrado!"));
+		Produto entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada! "));
 		return new ProdutoDTO(entity);
 	}
 
 	@Transactional
 	public ProdutoDTO insert(ProdutoDTO dto) {
 		Produto entity = new Produto();
-		
-		entity.setNomeItem(dto.getNomeItem());
-		entity.setQuantidade(dto.getQuantidade());
-		entity.setCategoria(dto.getCategoria());		
+		entity.setNome(dto.getNome());
+		entity.setQntd(dto.getQntd());
 		entity = repository.save(entity);
 		return new ProdutoDTO(entity);
 	}
@@ -50,9 +48,7 @@ public class ProdutoService {
 	public ProdutoDTO update(Long id, ProdutoDTO dto) {
 		Produto entity = repository.getOne(id);// para pegar apenas 1x do BD
 		try {
-			entity.setNomeItem(dto.getNomeItem());
-			entity.setQuantidade(dto.getQuantidade());
-			entity.setCategoria(dto.getCategoria());
+			entity.setNome(dto.getNome());
 			entity = repository.save(entity);
 			return new ProdutoDTO(entity);
 		} catch (EntityNotFoundException e) {
