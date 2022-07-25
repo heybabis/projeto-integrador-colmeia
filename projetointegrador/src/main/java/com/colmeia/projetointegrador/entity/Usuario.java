@@ -17,92 +17,43 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Value;
 
 @Entity
-@Table(name = "tb_Usuarios")
 
-public abstract class Usuario  implements Serializable{
+public abstract class Usuario {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
- 	@Column(name="idUsuário")
-	private Long idUsuario;
-	
 	@NotBlank
-	@Size(max=20)
-	@Column(name="nomeUsuário")
+	@Size(max = 50)
 	private String nome;
-	
+
 	@NotBlank
-	@Size(max=40)
-	@Column(name="sobrenomeUsuário")
-	private String sobrenome;
-	
-	
-	@NotBlank
-	@Size(max=35)	
-	@Column(name="nomesocialUsuário")
-	private String nomeSocial;
-	
-	@NotBlank
-	@Size(max=80)
+	@Size(max = 80)
 	@Email
-	@Column(name="emailUsuario")
 	private String email;
 
 	@NotBlank
 	@CPF
-	@Size(max=11)
-	@Column(name="CPFlUsuario")
+	@Size(max = 11)
 	private String cpf;
 
 	//Na camada controller é preciso colocar a anotação valid
 	
-	@NotBlank
-	@Size(max=11)
-	@Value("telefone")
-	private String telefone;
-	
-	public Usuario(Long idUsuario, String nome, String sobrenome, String nomeSocial, String email, @NotBlank @CPF @Size(max = 11) String cpf, String telefone) {	
-		this.idUsuario = idUsuario;
+
+
+	public Usuario(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,
+			@NotBlank @CPF @Size(max = 11) String cpf, @NotBlank @Size(max = 11) String telefone) {
+		super();
+
 		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.nomeSocial = nomeSocial;
-		this.cpf = cpf;
 		this.email = email;
+		this.cpf = cpf;
 		this.telefone = telefone;
-		
-		}
-
-	public Long getIdUsuario() {
-		return idUsuario;
 	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
+/*
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getSobrenome() {
-		return sobrenome;
-	}
-
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-
-	public String getNomeSocial() {
-		return nomeSocial;
-	}
-
-	public void setNomeSocial(String nomeSocial) {
-		this.nomeSocial = nomeSocial;
 	}
 
 	public String getEmail() {
@@ -117,7 +68,7 @@ public abstract class Usuario  implements Serializable{
 		return cpf;
 	}
 
-	public void setCpf(@NotBlank @CPF @Size(max = 11) String cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -128,9 +79,11 @@ public abstract class Usuario  implements Serializable{
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+*/
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(cpf, email, nome, telefone);
 	}
 
 	@Override
@@ -142,9 +95,8 @@ public abstract class Usuario  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(email, other.email) && Objects.equals(idUsuario, other.idUsuario) && Objects.equals(nome, other.nome)
-				&& Objects.equals(nomeSocial, other.nomeSocial) && Objects.equals(sobrenome, other.sobrenome)&&Objects.equals(cpf, other.cpf);
+		return Objects.equals(cpf, other.cpf) && Objects.equals(email, other.email) && Objects.equals(nome, other.nome)
+				&& Objects.equals(telefone, other.telefone);
 	}
-
 
 }
