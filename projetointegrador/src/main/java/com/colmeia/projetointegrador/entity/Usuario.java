@@ -36,6 +36,10 @@ public abstract class Usuario {
 
 	//Na camada controller é preciso colocar a anotação valid
 	
+	
+	@Size(max = 11)
+	private String telefone;
+	
 
 
 	public Usuario(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,

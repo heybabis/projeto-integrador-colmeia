@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.colmeia.projetointegrador.entity.EstoqueDeProdutosEntity;
 import com.colmeia.projetointegrador.entity.Produto;
 
 
@@ -18,7 +17,7 @@ public class EstoqueDeProdutosDTO implements Serializable {
 	private Produto p;
 	private Map<String, List<Produto>> copiaDoEstoque;
 
-	public EstoqueDeProdutosDTO(EstoqueDeProdutosEntity estoqueProdutos) {
+	public EstoqueDeProdutosDTO(EstoqueDeProdutosDTO estoqueProdutos) {
 		this.id= estoqueProdutos.getId();
 		this.estoque = estoqueProdutos.getEstoque();
 		this.p = estoqueProdutos.getP();

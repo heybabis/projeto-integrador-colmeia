@@ -1,5 +1,6 @@
 package com.colmeia.projetointegrador.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 @Table(name = "tb_doador")
 
-public class Doador extends Usuario {
+public class Doador extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
