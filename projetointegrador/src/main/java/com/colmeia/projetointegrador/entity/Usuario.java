@@ -51,7 +51,7 @@ public abstract class Usuario {
 		this.cpf = cpf;
 		this.telefone = telefone;
 	}
-/*
+
 	public String getNome() {
 		return nome;
 	}
@@ -83,7 +83,7 @@ public abstract class Usuario {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-*/
+
 	
 	@Override
 	public int hashCode() {

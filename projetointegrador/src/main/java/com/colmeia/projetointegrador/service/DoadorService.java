@@ -23,7 +23,7 @@ public class DoadorService {
 	DoadorRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<Object> findAllPaged(PageRequest pageRequest) {
+	public Page<DoadorDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Doador> list = repository.findAll(pageRequest);// chamando a busca paginada do reporitory
 		return list.map(x -> new DoadorDTO(x));
 	}

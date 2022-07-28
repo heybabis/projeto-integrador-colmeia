@@ -2,30 +2,32 @@ package com.colmeia.projetointegrador.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.colmeia.projetointegrador.entity.Doador;
 import com.colmeia.projetointegrador.entity.Usuario;
 
-public class DoadorDTO implements Serializable {
+public class DoadorDTO extends UsuarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long idDoador;
 
 
-	public DoadorDTO(Long idDoador) {
-		super();
+	public DoadorDTO(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,
+			@NotBlank @CPF @Size(max = 11) String cpf, @NotBlank @Size(max = 11) String telefone, Long idDoador) {
+		super(nome, email, cpf, telefone);
 		this.idDoador = idDoador;
 	}
 
 	public DoadorDTO(Doador doador) {
 		this.idDoador = doador.getIdDoador();
-
-	}
-
-
-	public DoadorDTO(Usuario x) {
-		// TODO Auto-generated constructor stub
-	}
-
+		
+			}
+	
 	public Long getIdDoador() {
 		return idDoador;
 	}
