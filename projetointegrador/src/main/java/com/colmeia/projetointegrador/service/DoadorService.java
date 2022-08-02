@@ -24,7 +24,7 @@ public class DoadorService {
 
 	@Transactional(readOnly = true)
 	public Page<DoadorDTO> findAllPaged(PageRequest pageRequest) {
-		Page<Doador> list = repository.findAll(pageRequest);// chamando a busca paginada do reporitory
+		Page<DoadorDTO> list = repository.findAll(pageRequest);// chamando a busca paginada do reporitory
 		return list.map(x -> new DoadorDTO(x));
 	}
 
@@ -44,7 +44,7 @@ public class DoadorService {
 
 	@Transactional
 	public DoadorDTO update(Long idDoador, DoadorDTO dto) {
-		Doador entity = repository.getOne(idDoador);// para pegar apenas 1x do BD
+		DoadorDTO entity = repository.getOne(idDoador);// para pegar apenas 1x do BD
 		try {
 			entity.setIdDoador(dto.getIdDoador());
 			entity = repository.save(entity);

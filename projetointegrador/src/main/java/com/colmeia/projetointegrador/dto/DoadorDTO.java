@@ -23,11 +23,15 @@ public class DoadorDTO extends UsuarioDTO implements Serializable {
 		this.idDoador = idDoador;
 	}
 
-	public DoadorDTO(Doador doador) {
-		this.idDoador = doador.getIdDoador();
+	public DoadorDTO(Doador entity) {
+		this.idDoador = entity.getIdDoador();
 		
 			}
 	
+	public DoadorDTO(DoadorDTO entity) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdDoador() {
 		return idDoador;
 	}

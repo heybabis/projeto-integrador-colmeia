@@ -1,19 +1,23 @@
 package com.colmeia.projetointegrador.service;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import com.colmeia.projetointegrador.entity.Produto;
-import com.colmeia.projetointegrador.entity.EstoqueDeProdutosEntity;
 
+public class EstoqueDeProdutosService {
+
+		
 public static void adicionarProduto(Produto produto, Integer quantidade){
     List<Produto> produtosDoCodigo;
     Long id = produto.getId();
+    String codigo;
 
     //o dia é lindo!!
-    if(estoque.containsKey(codigo)){
+    if(Estoque.containsKey(codigo)){
         produtosDoCodigo = estoque.get(codigo);
     
 	if (produtosDoCodigo.get(0).getNomeItem().equals(produto.getNomeItem())) {
