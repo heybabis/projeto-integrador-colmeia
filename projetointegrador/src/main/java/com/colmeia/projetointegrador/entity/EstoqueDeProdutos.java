@@ -2,7 +2,6 @@ package com.colmeia.projetointegrador.entity;
 
 //o dia é lindo!!
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "tb_produtos")
 
-public class EstoqueDeProdutosEntity implements Serializable {
+public class EstoqueDeProdutos implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,15 +26,11 @@ public class EstoqueDeProdutosEntity implements Serializable {
 
 	@NotBlank
 	@Column(name = "estoque")
-	public static Map<String, List<Produto>> estoque = new LinkedHashMap<String, List<Produto>>();;
+	public static List<Produto> estoque = (@NotBlank List<Produto>) new Produto();;
 
 	@NotBlank
 	@Column(name = "produto")
 	private static Produto p;
-
-	@NotBlank
-	@Column(name = "copia_do_estoque")
-	private static Map<String, List<Produto>> copiaDoEstoque;
 
 	public Long getId() {
 		return id;
@@ -45,12 +40,12 @@ public class EstoqueDeProdutosEntity implements Serializable {
 		this.id = id;
 	}
 
-	public static Map<String, List<Produto>> getEstoque() {
+	public static List<Produto> getEstoque() {
 		return estoque;
 	}
 
-	public static void setEstoque(Map<String, List<Produto>> estoque) {
-		EstoqueDeProdutosEntity.estoque = estoque;
+	public static void setEstoque(List<Produto> estoque) {
+		EstoqueDeProdutos.estoque = estoque;
 	}
 
 	public static Produto getP() {
@@ -58,15 +53,7 @@ public class EstoqueDeProdutosEntity implements Serializable {
 	}
 
 	public static void setP(Produto p) {
-		EstoqueDeProdutosEntity.p = p;
-	}
-
-	public static Map<String, List<Produto>> getCopiaDoEstoque() {
-		return copiaDoEstoque;
-	}
-
-	public static void setCopiaDoEstoque(Map<String, List<Produto>> copiaDoEstoque) {
-		EstoqueDeProdutosEntity.copiaDoEstoque = copiaDoEstoque;
+		EstoqueDeProdutos.p = p;
 	}
 
 	@Override
@@ -82,8 +69,9 @@ public class EstoqueDeProdutosEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EstoqueDeProdutosEntity other = (EstoqueDeProdutosEntity) obj;
+		EstoqueDeProdutos other = (EstoqueDeProdutos) obj;
 		return Objects.equals(id, other.id);
 	}
 
+	
 }
