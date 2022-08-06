@@ -73,4 +73,5 @@ public class EstoqueDeProdutos implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	
 }

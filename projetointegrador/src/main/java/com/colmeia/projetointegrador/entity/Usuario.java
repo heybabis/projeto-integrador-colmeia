@@ -1,55 +1,65 @@
 package com.colmeia.projetointegrador.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Value;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Entity
+@Table(name = "tb_usuarios")
 public abstract class Usuario {
 
-	@NotBlank
-	@Size(max = 50)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotNull(message = "O atributo Nome é Obrigatório!")
 	private String nome;
 
-	@NotBlank
-	@Size(max = 80)
-	@Email
-	private String email;
+	@NotNull(message = "O atributo Usuário é Obrigatório!")
+	@Email(message = "O atributo Usuário deve ser um email válido!")
+	private String usuario;
 
+	@NotBlank(message = "O atributo Senha é Obrigatório!")
+	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
+	private String senha;
+
+	
 	@NotBlank
 	@CPF
-	@Size(max = 11)
-	private String cpf;
-
-	//Na camada controller é preciso colocar a anotação valid
+	private String CPF;
 	
+		
+	@Column(name = "tipo_usuario")
+	private String tipoUsuario;
 	
-	@Size(max = 11)
-	private String telefone;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Produto> produto;
+
+	public Long getId() {
+		return id;
+	}
 	
-
-
-	public Usuario(@NotBlank @Size(max = 50) String nome, @NotBlank @Size(max = 80) @Email String email,
-			@NotBlank @CPF @Size(max = 11) String cpf, @NotBlank @Size(max = 11) String telefone) {
-		super();
-
-		this.nome = nome;
-		this.email = email;
-		this.cpf = cpf;
-		this.telefone = telefone;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -60,47 +70,53 @@ public abstract class Usuario {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
-	public String getTelefone() {
-		return telefone;
+		
+	
+    public List<Produto> getProduto() {
+        return this.produto;
+    }
+
+    public void setProduto(List<Produto> produto) {
+        this.produto = produto;
+    }
+
+	public String getTipoUsuario() {
+		return tipoUsuario;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String CPF) {
+		CPF = CPF;
+	}
+
+    
+    
+    
+    
+}
 
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(cpf, email, nome, telefone);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(email, other.email) && Objects.equals(nome, other.nome)
-				&& Objects.equals(telefone, other.telefone);
-	}
-
-}
