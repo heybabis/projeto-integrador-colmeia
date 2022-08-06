@@ -38,8 +38,7 @@ public class CategoriaService {
 	@Transactional
 	public CategoriaDTO insert(CategoriaDTO dto) {
 		Categoria entity = new Categoria();
-		entity.setAlimento(dto.getAlimento());
-		entity.setHigiene(dto.getHigiene());
+		entity.setTipoCategoria(dto.getTipoCategoria());
 		entity = repository.save(entity);
 		return new CategoriaDTO(entity);
 	}
@@ -48,8 +47,7 @@ public class CategoriaService {
 	public CategoriaDTO update(Long id, CategoriaDTO dto) {
 		Categoria entity = repository.getOne(id);// para pegar apenas 1x do BD
 		try {
-			entity.setAlimento(dto.getAlimento());
-			entity.setHigiene(dto.getHigiene());
+			entity.setTipoCategoria(dto.getTipoCategoria());
 			entity = repository.save(entity);
 			return new CategoriaDTO(entity);
 		} catch (EntityNotFoundException e) {

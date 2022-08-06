@@ -1,5 +1,6 @@
 package com.colmeia.projetointegrador.entity;
 
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.beans.factory.annotation.Value;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -84,7 +85,7 @@ public abstract class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
+
 
 		
 	
@@ -107,6 +108,7 @@ public abstract class Usuario {
 	public String getCPF() {
 		return CPF;
 	}
+
 
 	public void setCPF(String CPF) {
 		CPF = CPF;

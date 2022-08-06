@@ -1,6 +1,7 @@
 package com.colmeia.projetointegrador.dto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import com.colmeia.projetointegrador.entity.Categoria;
 
@@ -8,23 +9,20 @@ public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private String alimento;
-	private String higiene;
+	private String tipoCategoria;
 
 	public CategoriaDTO() {
 
 	}
 
-	public CategoriaDTO(Long id, String alimento, String higiene) {
+	public CategoriaDTO(Long id, String tipoCategoria) {
 		this.id = id;
-		this.alimento = alimento;
-		this.higiene = higiene;
+		this.tipoCategoria = tipoCategoria;
 	}
 
 	public CategoriaDTO(Categoria categoria) {
 		this.id = categoria.getId();
-		this.alimento = categoria.getAlimento();
-		this.higiene = categoria.getHigiene();
+		this.tipoCategoria = categoria.getTipoCategoria();
 	}
 
 	public Long getId() {
@@ -35,20 +33,29 @@ public class CategoriaDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getAlimento() {
-		return alimento;
+	public String getTipoCategoria() {
+		return tipoCategoria;
 	}
 
-	public void setAlimento(String alimento) {
-		this.alimento = alimento;
+	public void setTipoCategoria(String tipoCategoria) {
+		this.tipoCategoria = tipoCategoria;
 	}
 
-	public String getHigiene() {
-		return higiene;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, tipoCategoria);
 	}
 
-	public void setHigiene(String higiene) {
-		this.higiene = higiene;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategoriaDTO other = (CategoriaDTO) obj;
+		return Objects.equals(id, other.id) && Objects.equals(tipoCategoria, other.tipoCategoria);
 	}
 
 }

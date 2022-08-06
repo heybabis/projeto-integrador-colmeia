@@ -40,6 +40,8 @@ public class ProdutoService {
 		Produto entity = new Produto();
 		entity.setNome(dto.getNome());
 		entity.setQntd(dto.getQntd());
+		entity.setFoto(dto.getFoto());
+		entity.setTipoCategoria(dto.getTipoCategoria());
 		entity = repository.save(entity);
 		return new ProdutoDTO(entity);
 	}
@@ -49,8 +51,12 @@ public class ProdutoService {
 		Produto entity = repository.getOne(id);// para pegar apenas 1x do BD
 		try {
 			entity.setNome(dto.getNome());
+			entity.setQntd(dto.getQntd());
+			entity.setFoto(dto.getFoto());
+			entity.setTipoCategoria(dto.getTipoCategoria());
 			entity = repository.save(entity);
 			return new ProdutoDTO(entity);
+			
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id não encontrado! " + id);
 		}
