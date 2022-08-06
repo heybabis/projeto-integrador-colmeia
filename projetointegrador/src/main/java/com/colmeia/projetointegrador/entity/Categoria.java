@@ -1,15 +1,19 @@
 package com.colmeia.projetointegrador.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_categoria")
@@ -20,22 +24,23 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
-	@NotBlank
-	@Size(max = 20)
-	private String alimento;
+	@NotBlank(message = "O nome da categoria não pode ser vazia")
+	private String tipoCategoria;
 
-	@NotBlank
-	@Size(max = 20)
-	private String higiene;
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("categoria")
+	private List<Produto> produto;
 
 	public Categoria() {
 
 	}
 
-	public Categoria(Long id, @NotBlank @Size(max = 20) String alimento, @NotBlank @Size(max = 20) String higiene) {
+	public Categoria(Long id, @NotBlank(message = "O nome da categoria não pode ser vazia") String tipoCategoria,
+			List<Produto> produto) {
+		super();
 		Id = id;
-		this.alimento = alimento;
-		this.higiene = higiene;
+		this.tipoCategoria = tipoCategoria;
+		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -46,25 +51,25 @@ public class Categoria implements Serializable {
 		Id = id;
 	}
 
-	public String getAlimento() {
-		return alimento;
+	public String getTipoCategoria() {
+		return tipoCategoria;
 	}
 
-	public void setAlimento(String alimento) {
-		this.alimento = alimento;
+	public void setTipoCategoria(String tipoCategoria) {
+		this.tipoCategoria = tipoCategoria;
 	}
 
-	public String getHigiene() {
-		return higiene;
+	public List<Produto> getProduto() {
+		return produto;
 	}
 
-	public void setHigiene(String higiene) {
-		this.higiene = higiene;
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id, alimento, higiene);
+		return Objects.hash(Id, produto, tipoCategoria);
 	}
 
 	@Override
@@ -76,8 +81,8 @@ public class Categoria implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Categoria other = (Categoria) obj;
-		return Objects.equals(Id, other.Id) && Objects.equals(alimento, other.alimento)
-				&& Objects.equals(higiene, other.higiene);
+		return Objects.equals(Id, other.Id) && Objects.equals(produto, other.produto)
+				&& Objects.equals(tipoCategoria, other.tipoCategoria);
 	}
 
 }
