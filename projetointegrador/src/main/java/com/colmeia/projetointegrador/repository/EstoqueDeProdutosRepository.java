@@ -5,8 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.colmeia.projetointegrador.dto.EstoqueDeProdutosDTO;
 
-@Repository
-public interface EstoqueDeProdutosRepository extends JpaRepository<EstoqueDeProdutosDTO, Long>{
+public interface EstoqueDeProdutosRepository{
 
 	
 				

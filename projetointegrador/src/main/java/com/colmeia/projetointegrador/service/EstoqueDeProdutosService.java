@@ -12,7 +12,7 @@ import com.colmeia.projetointegrador.dto.EstoqueDeProdutosDTO;
 import com.colmeia.projetointegrador.entity.Produto;
 import com.colmeia.projetointegrador.repository.EstoqueDeProdutosRepository;
 
-@Service
+
 public class EstoqueDeProdutosService {
 
 	/* @Autowired

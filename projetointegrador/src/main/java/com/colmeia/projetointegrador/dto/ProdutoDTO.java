@@ -14,19 +14,19 @@ public class ProdutoDTO implements Serializable {
 	private String nome;
 	private Integer qntd;
 	private String foto;
-	private Categoria tipoCategoria;
+	private Categoria categoria;
 	private Usuario usuario;
 
 	public ProdutoDTO() {
 
 	}
 
-	public ProdutoDTO(Long id, String nome, Integer qntd, String foto, Categoria tipoCategoria, Usuario usuario) {
+	public ProdutoDTO(Long id, String nome, Integer qntd, String foto, Categoria categoria, Usuario usuario) {
 		this.id = id;
 		this.nome = nome;
 		this.qntd = qntd;
 		this.foto = foto;
-		this.tipoCategoria = tipoCategoria;
+		this.categoria = categoria;
 		this.usuario = usuario;
 	}
 
@@ -35,7 +35,7 @@ public class ProdutoDTO implements Serializable {
 		this.nome = produto.getNome();
 		this.qntd = produto.getQntd();
 		this.foto = produto.getFoto();
-		this.tipoCategoria = produto.getTipoCategoria();
+		this.categoria = produto.getCategoria();
 	}
 
 	public Long getId() {
@@ -70,12 +70,12 @@ public class ProdutoDTO implements Serializable {
 		this.foto = foto;
 	}
 
-	public Categoria getTipoCategoria() {
-		return tipoCategoria;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setTipoCategoria(Categoria tipoCategoria) {
-		this.tipoCategoria = tipoCategoria;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public Usuario getUsuario() {
@@ -88,7 +88,7 @@ public class ProdutoDTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(foto, id, nome, qntd, tipoCategoria, usuario);
+		return Objects.hash(foto, id, nome, qntd, categoria, usuario);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ProdutoDTO implements Serializable {
 			return false;
 		ProdutoDTO other = (ProdutoDTO) obj;
 		return Objects.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(qntd, other.qntd) && Objects.equals(tipoCategoria, other.tipoCategoria)
+				&& Objects.equals(qntd, other.qntd) && Objects.equals(categoria, other.categoria)
 				&& Objects.equals(usuario, other.usuario);
 	}
 

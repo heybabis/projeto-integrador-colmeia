@@ -34,7 +34,7 @@ public class Produto implements Serializable {
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
-	private Categoria tipoCategoria;
+	private Categoria categoria;
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
@@ -44,15 +44,15 @@ public class Produto implements Serializable {
 
 	}
 
-	public Produto(Long id, @NotBlank(message = "O nome do produto não pode ser vazio") @Size(max = 60) String nome,
-			@NotBlank Integer qntd, String foto, Categoria tipoCategoria, Usuario usuario) {
+	/*public Produto(Long id, @NotBlank(message = "O nome do produto não pode ser vazio") @Size(max = 60) String nome,
+			@NotBlank Integer qntd, String foto, Categoria categoria, Usuario usuario) {
 		this.id = id;
 		this.nome = nome;
 		this.qntd = qntd;
 		this.foto = foto;
-		this.tipoCategoria = tipoCategoria;
+		this.categoria = categoria;
 		this.usuario = usuario;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -86,12 +86,12 @@ public class Produto implements Serializable {
 		this.foto = foto;
 	}
 
-	public Categoria getTipoCategoria() {
-		return tipoCategoria;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setTipoCategoria(Categoria tipoCategoria) {
-		this.tipoCategoria = tipoCategoria;
+	public void setCategoria(Categoria categoria) {
+		this.categoria =categoria;
 	}
 
 	public Usuario getUsuario() {
@@ -104,7 +104,7 @@ public class Produto implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(foto, id, nome, qntd, tipoCategoria, usuario);
+		return Objects.hash(foto, id, nome, qntd, categoria, usuario);
 	}
 
 	@Override
@@ -117,7 +117,6 @@ public class Produto implements Serializable {
 			return false;
 		Produto other = (Produto) obj;
 		return Objects.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(qntd, other.qntd) && Objects.equals(tipoCategoria, other.tipoCategoria)
 				&& Objects.equals(usuario, other.usuario);
 	}
 
