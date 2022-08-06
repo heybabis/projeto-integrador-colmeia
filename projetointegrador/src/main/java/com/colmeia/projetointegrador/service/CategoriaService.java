@@ -1,28 +1,21 @@
 package com.colmeia.projetointegrador.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.colmeia.projetointegrador.dto.CategoriaDTO;
 import com.colmeia.projetointegrador.entity.Categoria;
-import com.colmeia.projetointegrador.exception.ResourceNotFoundException;
 import com.colmeia.projetointegrador.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
 
 	@Autowired
-	private CategoriaRepository repository;
+	private CategoriaRepository categoriaRepository;
 
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public Page<CategoriaDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Categoria> list = repository.findAll(pageRequest);// chamando a busca paginada do reporitory
 		return list.map(x -> new CategoriaDTO(x));
@@ -63,6 +56,40 @@ public class CategoriaService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id não encontrado! " + id);
 		}
+
+	}*/
+	public List<Categoria> getAll() {
+
+		return categoriaRepository.findAll();
+
+	}
+
+	public Optional<Categoria> getById(Long id) {
+
+		return categoriaRepository.findById(id);
+
+	}
+
+	public Categoria post(Categoria setor) {
+
+		return categoriaRepository.save(setor);
+
+	}
+
+	public Optional<Categoria> put(Categoria setor) {
+
+		if (categoriaRepository.existsById(setor.getId()))
+			return Optional.ofNullable(categoriaRepository.save(setor));
+		
+		return Optional.empty();
+		
+
+	}
+
+	public void delete(Long id) {
+
+		if (categoriaRepository.existsById(id))
+			categoriaRepository.deleteById(id);
 
 	}
 }

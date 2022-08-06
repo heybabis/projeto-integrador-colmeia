@@ -21,11 +21,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.colmeia.projetointegrador.dto.ProdutoDTO;
 import com.colmeia.projetointegrador.service.ProdutoService;
 
-@RestController
-@RequestMapping(value = "/estoque_produtos")
+/*@RestController
+@RequestMapping(value = "/estoque_produtos")*/
 public class EstoqueDeProdutosController {
 
-	@Autowired
+	/*@Autowired
 	private ProdutoService service;
 
 	@GetMapping
@@ -67,6 +67,6 @@ public class EstoqueDeProdutosController {
 		service.delete(id);// passa as variáveis de cima, DO MÉTODO
 		return ResponseEntity.noContent().build();// O DELETE NAO PRECISA TER O BODY(CORPO)DEVOLVE UMA RESPOSTA 204, DEU CERTO A EXCLUSÃO
 
-	}
+	}*/
 
 }

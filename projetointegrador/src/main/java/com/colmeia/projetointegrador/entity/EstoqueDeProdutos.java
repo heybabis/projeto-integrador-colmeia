@@ -14,11 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "tb_produtos")
+/*@Entity
+@Table(name = "tb_produtos")*/
 
 public class EstoqueDeProdutos implements Serializable {
-	private static final long serialVersionUID = 1L;
+	/*private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,7 @@ public class EstoqueDeProdutos implements Serializable {
 			return false;
 		EstoqueDeProdutos other = (EstoqueDeProdutos) obj;
 		return Objects.equals(id, other.id);
-	}
+	}*/
 
 	
 }

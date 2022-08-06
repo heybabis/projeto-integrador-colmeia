@@ -1,5 +1,6 @@
 package com.colmeia.projetointegrador.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,9 +21,9 @@ import com.colmeia.projetointegrador.repository.ProdutoRepository;
 public class ProdutoService {
 
 	@Autowired
-	private ProdutoRepository repository;
+	private ProdutoRepository produtoRepository;
 
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public Page<ProdutoDTO> findAllPaged(PageRequest pageRequest) {
 		Page<Produto> list = repository.findAll(pageRequest);// chamando a busca paginada do reporitory
 		return list.map(x -> new ProdutoDTO(x));
@@ -71,6 +72,41 @@ public class ProdutoService {
 			throw new ResourceNotFoundException("Id não encontrado! " + id);
 		}
 
+	}*/
+	public List<Produto> getAll() {
+
+		return produtoRepository.findAll();
+
 	}
+
+	public Optional<Produto> getById(Long id) {
+
+		return produtoRepository.findById(id);
+
+	}
+
+	public Produto post(Produto produto) {
+
+		return produtoRepository.save(produto);
+
+	}
+
+	public Optional<Produto> put(Produto produto) {
+
+		if (produtoRepository.existsById(produto.getId()))
+			return Optional.ofNullable(produtoRepository.save(produto));
+		
+		return Optional.empty();
+		
+
+	}
+
+	public void delete(Long id) {
+
+		if (produtoRepository.existsById(id))
+			produtoRepository.deleteById(id);
+
+	}
+
 
 }
