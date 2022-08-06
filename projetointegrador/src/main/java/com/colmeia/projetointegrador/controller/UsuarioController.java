@@ -2,6 +2,7 @@ package com.colmeia.projetointegrador.controller;
 
 import java.util.Optional;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
 	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
