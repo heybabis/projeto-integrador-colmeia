@@ -1,9 +1,6 @@
 package com.colmeia.projetointegrador.entity;
 
-
-import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
-
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -42,15 +38,13 @@ public abstract class Usuario {
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
-	
 	@NotBlank
 	@CPF
 	private String CPF;
-	
-		
+
 	@Column(name = "tipo_usuario")
 	private String tipoUsuario;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Produto> produto;
@@ -58,7 +52,7 @@ public abstract class Usuario {
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -86,16 +80,15 @@ public abstract class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 
+	}
 
-		
-	
-    public List<Produto> getProduto() {
-        return this.produto;
-    }
+	public List<Produto> getProduto() {
+		return this.produto;
+	}
 
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
-    }
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
 
 	public String getTipoUsuario() {
 		return tipoUsuario;
@@ -109,16 +102,8 @@ public abstract class Usuario {
 		return CPF;
 	}
 
-
 	public void setCPF(String CPF) {
-		CPF = CPF;
+		this.CPF = CPF;
 	}
 
-    
-    
-    
-    
 }
-
-	
-
