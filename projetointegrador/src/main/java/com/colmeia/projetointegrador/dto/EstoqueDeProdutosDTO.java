@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.colmeia.projetointegrador.entity.EstoqueDeProdutosEntity;
 import com.colmeia.projetointegrador.entity.Produto;
 
 
@@ -14,15 +13,14 @@ public class EstoqueDeProdutosDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Map<String, List<Produto>> estoque;
+	private List<Produto> estoque;
 	private Produto p;
-	private Map<String, List<Produto>> copiaDoEstoque;
-
-	public EstoqueDeProdutosDTO(EstoqueDeProdutosEntity estoqueProdutos) {
+	
+	public EstoqueDeProdutosDTO(EstoqueDeProdutosDTO estoqueProdutos) {
 		this.id= estoqueProdutos.getId();
-		this.estoque = estoqueProdutos.getEstoque();
+		this.estoque = (List<Produto>) estoqueProdutos.getEstoque();
 		this.p = estoqueProdutos.getP();
-		this.copiaDoEstoque = estoqueProdutos.getCopiaDoEstoque();
+	
 		
 	}
 
@@ -34,11 +32,11 @@ public class EstoqueDeProdutosDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Map<String, List<Produto>> getEstoque() {
+	public List<Produto> getEstoque() {
 		return estoque;
 	}
 
-	public void setEstoque(Map<String, List<Produto>> estoque) {
+	public void setEstoque (List<Produto> estoque) {
 		this.estoque = estoque;
 	}
 
@@ -50,19 +48,9 @@ public class EstoqueDeProdutosDTO implements Serializable {
 		this.p = p;
 	}
 
-	public Map<String, List<Produto>> getCopiaDoEstoque() {
-		return copiaDoEstoque;
-	}
-
-	public void setCopiaDoEstoque(Map<String, List<Produto>> copiaDoEstoque) {
-		this.copiaDoEstoque = copiaDoEstoque;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(copiaDoEstoque, estoque, id, p);
-	}
-
+	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -72,7 +60,7 @@ public class EstoqueDeProdutosDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		EstoqueDeProdutosDTO other = (EstoqueDeProdutosDTO) obj;
-		return Objects.equals(copiaDoEstoque, other.copiaDoEstoque) && Objects.equals(estoque, other.estoque)
+		return  Objects.equals(estoque, other.estoque)
 				&& Objects.equals(id, other.id) && Objects.equals(p, other.p);
 	}
 
