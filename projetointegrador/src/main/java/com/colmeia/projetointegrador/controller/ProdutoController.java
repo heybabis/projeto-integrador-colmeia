@@ -88,7 +88,8 @@ public class ProdutoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.post(produto));
 	}
 	
-	@PutMapping
+	@PutMapping(consumes = { "application/json", "application/xml" }, produces = { "application/json",
+	"application/xml" })
 	public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto) {
 		return produtoService.put(produto)
                 .map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))

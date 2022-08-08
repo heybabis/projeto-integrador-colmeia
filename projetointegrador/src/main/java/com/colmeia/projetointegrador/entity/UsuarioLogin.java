@@ -11,10 +11,10 @@ public class UsuarioLogin {
 	private String senha;
 
 	private String cpf;
-	
+
 	private String tipoUsuario;
 
-    private String token;
+	private String token;
 
 	public Long getId() {
 		return id;
@@ -35,7 +35,7 @@ public class UsuarioLogin {
 	public String getUsuario() {
 		return usuario;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -56,7 +56,6 @@ public class UsuarioLogin {
 		this.senha = senha;
 	}
 
-	
 	public String getTipoUsuario() {
 		return tipoUsuario;
 	}
@@ -66,18 +65,11 @@ public class UsuarioLogin {
 	}
 
 	public String getToken() {
-        return this.token;
-    }
+		return this.token;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }
-
-
-	
-	
-	
-	
-

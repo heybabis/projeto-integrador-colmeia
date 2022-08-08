@@ -35,12 +35,9 @@ public class Categoria implements Serializable {
 
 	}
 
-	public Categoria(Long id, @NotBlank(message = "O nome da categoria não pode ser vazia") String tipoCategoria,
-			List<Produto> produto) {
-		super();
+	public Categoria(Long id, @NotBlank(message = "O nome da categoria não pode ser vazia") String tipoCategoria) {
 		Id = id;
 		this.tipoCategoria = tipoCategoria;
-		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -59,17 +56,9 @@ public class Categoria implements Serializable {
 		this.tipoCategoria = tipoCategoria;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id, produto, tipoCategoria);
+		return Objects.hash(Id);
 	}
 
 	@Override
@@ -81,8 +70,7 @@ public class Categoria implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Categoria other = (Categoria) obj;
-		return Objects.equals(Id, other.Id) && Objects.equals(produto, other.produto)
-				&& Objects.equals(tipoCategoria, other.tipoCategoria);
+		return Objects.equals(Id, other.Id);
 	}
 
 }

@@ -26,8 +26,7 @@ public class Produto implements Serializable {
 	@NotBlank(message = "O nome do produto não pode ser vazio")
 	@Size(max = 60)
 	private String nome;
-
-	@NotBlank
+	
 	private Integer qntd;
 
 	private String foto;
@@ -44,15 +43,15 @@ public class Produto implements Serializable {
 
 	}
 
-	/*public Produto(Long id, @NotBlank(message = "O nome do produto não pode ser vazio") @Size(max = 60) String nome,
-			@NotBlank Integer qntd, String foto, Categoria categoria, Usuario usuario) {
+	public Produto(Long id, @NotBlank(message = "O nome do produto não pode ser vazio") @Size(max = 60) String nome,
+			Integer qntd, String foto, Categoria categoria, Usuario usuario) {
 		this.id = id;
 		this.nome = nome;
 		this.qntd = qntd;
 		this.foto = foto;
 		this.categoria = categoria;
 		this.usuario = usuario;
-	}*/
+	}
 
 	public Long getId() {
 		return id;
@@ -91,7 +90,7 @@ public class Produto implements Serializable {
 	}
 
 	public void setCategoria(Categoria categoria) {
-		this.categoria =categoria;
+		this.categoria = categoria;
 	}
 
 	public Usuario getUsuario() {
@@ -104,7 +103,7 @@ public class Produto implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(foto, id, nome, qntd, categoria, usuario);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -116,8 +115,7 @@ public class Produto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		return Objects.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(usuario, other.usuario);
+		return Objects.equals(id, other.id);
 	}
 
 }

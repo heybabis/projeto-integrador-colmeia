@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.colmeia.projetointegrador.entity.Usuario;
 import com.colmeia.projetointegrador.repository.UsuarioRepository;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -28,10 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (usuario.isPresent())
 			return new UserDetailsImpl(usuario.get());
 		else
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-			
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);// usuario proibido pq n esta no bco
+
 	}
-	
-	
-	
+
 }

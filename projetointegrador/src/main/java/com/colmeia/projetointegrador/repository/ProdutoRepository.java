@@ -7,5 +7,6 @@ import com.colmeia.projetointegrador.entity.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
+	
 
 }

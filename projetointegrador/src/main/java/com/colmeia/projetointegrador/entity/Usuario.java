@@ -47,25 +47,8 @@ public  class Usuario {
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
-	private List<Produto> produto;
-
+	private List<Produto> produto;		
 	
-	
-	public Usuario(Long id, @NotNull(message = "O atributo Nome é Obrigatório!") String nome,
-			@NotNull(message = "O atributo Usuário é Obrigatório!") @Email(message = "O atributo Usuário deve ser um email válido!") String usuario,
-			@NotBlank(message = "O atributo Senha é Obrigatório!") @Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres") String senha,
-			@NotBlank @org.hibernate.validator.constraints.br.CPF String cPF, String tipoUsuario,
-			List<Produto> produto) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.usuario = usuario;
-		this.senha = senha;
-		CPF = cPF;
-		this.tipoUsuario = tipoUsuario;
-		this.produto = produto;
-	}
-
 	public Long getId() {
 		return id;
 	}

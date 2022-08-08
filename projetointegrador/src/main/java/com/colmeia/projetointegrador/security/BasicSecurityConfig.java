@@ -13,46 +13,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-
-
+@Configuration // espera uma requisicao de servico @bean
+@EnableWebSecurity // indica q a classe vai ser usada para configar a seguranca da aplicacao
+@EnableGlobalMethodSecurity(prePostEnabled = true) // habilita a seguranca
 public class BasicSecurityConfig {
+
 	@Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-  
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-        http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable()
-                .cors();
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .antMatchers("/usuarios/logar").permitAll()
-                        .antMatchers("/usuarios/cadastrar").permitAll()
-                        .antMatchers(HttpMethod.OPTIONS).permitAll()
-                        .anyRequest().authenticated())
-                .httpBasic();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable().cors();
 
-        return http.build();
+		http.authorizeHttpRequests(
+				(auth) -> auth.antMatchers("/usuarios/logar").permitAll().antMatchers("/usuarios/cadastrar").permitAll()
+						.antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated())
+				.httpBasic();
 
-    }
+		return http.build();
+
+	}
 
 }
-	
-	
-
-
