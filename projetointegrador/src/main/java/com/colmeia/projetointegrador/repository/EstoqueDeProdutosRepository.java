@@ -1,13 +1,11 @@
 package com.colmeia.projetointegrador.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.colmeia.projetointegrador.dto.EstoqueDeProdutosDTO;
+import com.colmeia.projetointegrador.entity.EstoqueDeProdutos;
 
-public interface EstoqueDeProdutosRepository{
+public interface EstoqueDeProdutosRepository extends JpaRepository<EstoqueDeProdutos, Long>{
 
-	
-				
+			
 		
 }
