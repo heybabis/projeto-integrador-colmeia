@@ -2,7 +2,6 @@ package com.colmeia.projetointegrador.Configuration;
 
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -20,9 +19,9 @@ public class SwaggerConfig {
 				.info(new Info().title("projetointegrador")
 						.description("Projeto Transforme-se Serasa Experian - Digital House").version("v0.0.1")
 						.license(new License().name("Spring Doc").url("http://springdoc.org"))
-						.contact(new Contact().name("Rafael Queiróz").url("https://github.com/rafaelq80")
-								.email("rafaelproinfo@gmail.com")))
-				.externalDocs(new ExternalDocumentation().description("Github").url("https://github.com/rafaelq80/"));
+						.contact(new Contact().name("Grupo Venus").url("https://github.com/heybabis")
+								.email("naianacordeirodelima@gmail.com")))
+				.externalDocs(new ExternalDocumentation().description("Github").url("https://github.com/heybabis/"));
 	}
 
 	@Bean

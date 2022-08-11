@@ -15,45 +15,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colmeia.projetointegrador.entity.Categoria;
-import com.colmeia.projetointegrador.repository.CategoriaRepository;
+import com.colmeia.projetointegrador.entity.Item;
+import com.colmeia.projetointegrador.repository.ItemRepository;
+import com.colmeia.projetointegrador.service.ProdutoService;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/itens")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CategoriaController {
+public class ItemController {
 
 	@Autowired
-	private CategoriaRepository repository;
+	private ItemRepository repository;
+
+	@Autowired
+	private ProdutoService service;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAllCategorias() {
+	public ResponseEntity<List<Item>> findAllByItens() {
 
 		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findByIdCategoria(@PathVariable long id) {
+	public ResponseEntity<Item> findByIdItem(@PathVariable long id) {
 
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> postCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<Item> postItem(@RequestBody Item item) {
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(item));
 	}
 
 	@PutMapping
-	public ResponseEntity<Categoria> putCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<Item> putItem(@RequestBody Item item) {
 
-		return ResponseEntity.ok(repository.save(categoria));
+		return ResponseEntity.ok(repository.save(item));
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteCategoria(@PathVariable long id) {
+	public void deleteItem(@PathVariable long id) {
 
 		repository.deleteById(id);
+	}
+
+	@DeleteMapping("/produto_item/produtos/{idProduto}/itens/{idItem}")
+	public void putProduto(@PathVariable long idProduto, @PathVariable long idItem) {
+
+		service.deletarProduto(idProduto, idItem);
 	}
 
 }

@@ -4,16 +4,15 @@ import java.nio.charset.Charset;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.colmeia.projetointegrador.entity.Item;
 import com.colmeia.projetointegrador.entity.Usuario;
 import com.colmeia.projetointegrador.entity.UsuarioLogin;
+import com.colmeia.projetointegrador.repository.ItemRepository;
 import com.colmeia.projetointegrador.repository.UsuarioRepository;
-
 
 @Service
 public class UsuarioService {
@@ -21,93 +20,82 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
+	@Autowired
+	private ItemRepository itemRepository;
 
-		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
-			return Optional.empty();
+	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
 
-		usuario.setSenha(criptografarSenha(usuario.getSenha()));
-		return Optional.of(usuarioRepository.save(usuario));
-	}
+		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent() && usuario.getId() == 0) {
+			return null;
 
-	
-
-	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
-
-		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
-			
-			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario()); 
-			
-			if ((buscaUsuario.isPresent()) && buscaUsuario.get().getId()!= usuario.getId())
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário  já existe", null);
-			
-
-			usuario.setSenha(criptografarSenha(usuario.getSenha()));
-			
-			return Optional.of(usuarioRepository.save(usuario));
-	}
-		return Optional.empty();
-	}
-	
-	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
-		Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
-		
-		if(usuario.isPresent()) {
-			if (compararSenha(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
-				
-				usuarioLogin.get().setId(usuario.get().getId());
-				usuarioLogin.get().setNome(usuario.get().getNome());
-				usuarioLogin.get().setTipoUsuario(usuario.get().getTipoUsuario());
-				usuarioLogin.get().setToken(gerarBasicToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha()));
-				usuarioLogin.get().setSenha(usuario.get().getSenha());
-				
-				return usuarioLogin;
-				
-			}
-			
 		}
-		
-		return Optional.empty();
-		
-	}
-	
-	
-	
-	private String gerarBasicToken(String usuario, String senha) {
-		String token = usuario + ":" + senha;
-		
-		byte[] tokenBase64 = Base64.encode(token.getBytes(Charset.forName("US-ASCII")));
-		
-		return "Basic " + new String(tokenBase64);
-	
-	}
 
-
-
-	private boolean compararSenha(String senhaDigitada, String senhaBanco) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		return encoder.matches(senhaDigitada, senhaBanco);
+		String senhaEncoder = encoder.encode(usuario.getSenha());
+		usuario.setSenha(senhaEncoder);
+
+		/* GERANDO CARRINHO USUARIO */
+		/* INSTANCIA UM NOVO CARRINHO 'Pedido' */
+		Item item = new Item();
+
+		/* REGISTRA O USUARIO NA BASE DE DADOS */
+		usuarioRepository.save(usuario);
+
+		/* ASSOCIA O USUARIO AO CARRINHO */
+		item.setUsuario(usuario);
+
+		/* REGISTRA O CARRINHO NA BASE DE DADOS */
+		itemRepository.save(item);
+
+		return Optional.of(usuarioRepository.save(usuario));
+
 	}
 
+	/* LOGA USUARIO NO SISTEMA */
+	public Optional<UsuarioLogin> Logar(Optional<UsuarioLogin> usuarioLogin) {
 
-
-	private String criptografarSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
-		return encoder.encode(senha);
+		/*
+		 * CASO TENHA ALGUM VALOR DIGITADO, IREMOS COMPARAR OS DADOS QUE ESTAO
+		 * CADASTRADOS NA BASE DE DADOS COM O QUE O USUARIO ACABOU DE DIGITAR
+		 */
+		if (usuario.isPresent()) {
+			/*
+			 * COMPARA O QUE FOI DIGITADO NO BODY COM O QUE ESTA NO BANCO DE DADOS REFERENTE
+			 * AQUELE DETERMINADO USUARIO
+			 */
+			if (encoder.matches(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
+
+				/* CRIA UMA STRING COM O 'NOME_USUARIO:SENHA' */
+				String auth = usuarioLogin.get().getUsuario() + ":" + usuarioLogin.get().getSenha();
+
+				/*
+				 * CRIA UM ARRAY DE BYTE, QUE RECEBE A STRING GERADA ACIMA E FORMATA NO PADRAO
+				 * 'US-ASCII'
+				 */
+				byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
+
+				/* GERA O TOKEN PARA ACESSO DE USUARIO POR MEIO DO ARRAY DE BY GERADO */
+				String authHeader = "Basic " + new String(encodedAuth);
+
+				/* INSERE O TOKEN GERADO DENTRO DE NOSSO ATRIBUTO TOKEN */
+				usuarioLogin.get().setToken(authHeader);
+				usuarioLogin.get().setUsuario(usuario.get().getUsuario());
+				usuarioLogin.get().setSenha(usuario.get().getSenha());
+				usuarioLogin.get().setTipoUsuario(usuario.get().getTipoUsuario());
+				usuarioLogin.get().setNome(usuario.get().getNome());
+				usuarioLogin.get().setCpf(usuario.get().getCPF());
+				usuarioLogin.get().setId(usuario.get().getId());
+
+				return usuarioLogin;
+
+			}
+		}
+
+		return null;
 	}
-
-
-
-	
-
-
-
-	
-
-
-
-		
 
 }

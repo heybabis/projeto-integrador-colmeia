@@ -1,14 +1,16 @@
 package com.colmeia.projetointegrador.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -20,8 +22,9 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_usuarios")
-public  class Usuario {
+@Table(name = "usuario")
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,40 +34,21 @@ public  class Usuario {
 	private String nome;
 
 	@NotNull(message = "O atributo Usuário é Obrigatório!")
-	@Email(message = "O atributo Usuário deve ser um email válido!")
+	@Email(message = "Deve ser um email válido!")
 	private String usuario;
 
 	@NotBlank(message = "O atributo Senha é Obrigatório!")
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
-	@NotBlank
 	@CPF
 	private String CPF;
 
-	@Column(name = "tipo_usuario")
 	private String tipoUsuario;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Produto> produto;
-
-	
-	
-	public Usuario(Long id, @NotNull(message = "O atributo Nome é Obrigatório!") String nome,
-			@NotNull(message = "O atributo Usuário é Obrigatório!") @Email(message = "O atributo Usuário deve ser um email válido!") String usuario,
-			@NotBlank(message = "O atributo Senha é Obrigatório!") @Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres") String senha,
-			@NotBlank @org.hibernate.validator.constraints.br.CPF String cPF, String tipoUsuario,
-			List<Produto> produto) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.usuario = usuario;
-		this.senha = senha;
-		CPF = cPF;
-		this.tipoUsuario = tipoUsuario;
-		this.produto = produto;
-	}
+	@ManyToMany(mappedBy = "itens", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties({ "itens" })
+	private List<Produto> itens = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -96,15 +80,14 @@ public  class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-
 	}
 
-	public List<Produto> getProduto() {
-		return this.produto;
+	public String getCPF() {
+		return CPF;
 	}
 
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
+	public void setCPF(String cPF) {
+		CPF = cPF;
 	}
 
 	public String getTipoUsuario() {
@@ -115,12 +98,12 @@ public  class Usuario {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public String getCPF() {
-		return CPF;
+	public List<Produto> getItens() {
+		return itens;
 	}
 
-	public void setCPF(String CPF) {
-		this.CPF = CPF;
+	public void setItens(List<Produto> itens) {
+		this.itens = itens;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.colmeia.projetointegrador.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,12 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_categoria")
+@Table(name = "categoria")
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,24 +24,13 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
-	@NotBlank(message = "O nome da categoria não pode ser vazia")
-	private String tipoCategoria;
+	@NotNull
+	@Size(max = 60)
+	private String nome;
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("categoria")
-	private List<Produto> produto;
-
-	public Categoria() {
-
-	}
-
-	public Categoria(Long id, @NotBlank(message = "O nome da categoria não pode ser vazia") String tipoCategoria,
-			List<Produto> produto) {
-		super();
-		Id = id;
-		this.tipoCategoria = tipoCategoria;
-		this.produto = produto;
-	}
+	private List<Produto> produtos;
 
 	public Long getId() {
 		return Id;
@@ -51,38 +40,20 @@ public class Categoria implements Serializable {
 		Id = id;
 	}
 
-	public String getTipoCategoria() {
-		return tipoCategoria;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTipoCategoria(String tipoCategoria) {
-		this.tipoCategoria = tipoCategoria;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(Id, produto, tipoCategoria);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Categoria other = (Categoria) obj;
-		return Objects.equals(Id, other.Id) && Objects.equals(produto, other.produto)
-				&& Objects.equals(tipoCategoria, other.tipoCategoria);
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 }

@@ -1,21 +1,29 @@
 package com.colmeia.projetointegrador.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_produtos")
+@Table(name = "produto")
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,36 +31,27 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "O nome do produto não pode ser vazio")
+	@NotNull
 	@Size(max = 60)
 	private String nome;
 
-	@NotBlank
-	private Integer qntd;
+	@NotNull
+	@URL
+	private String img;
 
-	private String foto;
+	@NotNull
+	private int estoque;
+
+	private int qtdItemProduto;
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
 
-	@ManyToOne
-	@JsonIgnoreProperties("produto")
-	private Usuario usuario;
-
-	public Produto() {
-
-	}
-
-	/*public Produto(Long id, @NotBlank(message = "O nome do produto não pode ser vazio") @Size(max = 60) String nome,
-			@NotBlank Integer qntd, String foto, Categoria categoria, Usuario usuario) {
-		this.id = id;
-		this.nome = nome;
-		this.qntd = qntd;
-		this.foto = foto;
-		this.categoria = categoria;
-		this.usuario = usuario;
-	}*/
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "produto_item", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+	@JsonIgnoreProperties({ "itens" })
+	private List<Usuario> itens = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -70,20 +69,28 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Integer getQntd() {
-		return qntd;
+	public String getImg() {
+		return img;
 	}
 
-	public void setQntd(Integer qntd) {
-		this.qntd = qntd;
+	public void setImg(String img) {
+		this.img = img;
 	}
 
-	public String getFoto() {
-		return foto;
+	public int getEstoque() {
+		return estoque;
 	}
 
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setEstoque(int estoque) {
+		this.estoque = estoque;
+	}
+
+	public int getQtdItemProduto() {
+		return qtdItemProduto;
+	}
+
+	public void setQtdItemProduto(int qtdItemProduto) {
+		this.qtdItemProduto = qtdItemProduto;
 	}
 
 	public Categoria getCategoria() {
@@ -91,33 +98,15 @@ public class Produto implements Serializable {
 	}
 
 	public void setCategoria(Categoria categoria) {
-		this.categoria =categoria;
+		this.categoria = categoria;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public List<Usuario> getItens() {
+		return itens;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(foto, id, nome, qntd, categoria, usuario);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		return Objects.equals(foto, other.foto) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(usuario, other.usuario);
+	public void setItens(List<Usuario> itens) {
+		this.itens = itens;
 	}
 
 }
