@@ -59,7 +59,7 @@ public class UsuarioController {
 	 * E SALVAR OS DADOS CADASTRADO NA BASE DE DADOS
 	 */
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) throws Exception {
 		Optional<Usuario> user = service.CadastrarUsuario(usuario);
 
 		try {

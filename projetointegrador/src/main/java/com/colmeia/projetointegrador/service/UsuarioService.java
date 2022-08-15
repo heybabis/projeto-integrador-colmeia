@@ -23,32 +23,37 @@ public class UsuarioService {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
+	public Optional<Usuario> CadastrarUsuario(Usuario usuario) throws Exception {
+		try {
+			if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent() && usuario.getId() == 0) {
+				return null;
 
-		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent() && usuario.getId() == 0) {
-			return null;
+			}
 
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			String senhaEncoder = encoder.encode(usuario.getSenha());
+			usuario.setSenha(senhaEncoder);
+
+			/* GERANDO CARRINHO USUARIO */
+			/* INSTANCIA UM NOVO CARRINHO 'Pedido' */
+//			Item item = new Item();
+
+			/* REGISTRA O USUARIO NA BASE DE DADOS */
+			usuarioRepository.save(usuario);
+
+			/* ASSOCIA O USUARIO AO CARRINHO */
+//			item.setUsuario(usuario);
+
+			/* REGISTRA O CARRINHO NA BASE DE DADOS */
+//			itemRepository.save(item);
+
+			return Optional.of(usuarioRepository.save(usuario));
+			
+		}catch (Exception e) {
+			throw new Exception(e.getCause());
 		}
-
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		String senhaEncoder = encoder.encode(usuario.getSenha());
-		usuario.setSenha(senhaEncoder);
-
-		/* GERANDO CARRINHO USUARIO */
-		/* INSTANCIA UM NOVO CARRINHO 'Pedido' */
-		Item item = new Item();
-
-		/* REGISTRA O USUARIO NA BASE DE DADOS */
-		usuarioRepository.save(usuario);
-
-		/* ASSOCIA O USUARIO AO CARRINHO */
-		item.setUsuario(usuario);
-
-		/* REGISTRA O CARRINHO NA BASE DE DADOS */
-		itemRepository.save(item);
-
-		return Optional.of(usuarioRepository.save(usuario));
+	
 
 	}
 
